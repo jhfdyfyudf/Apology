@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Do You Love Me?</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #ffe0e0, #ffc0cb);
+      padding: 50px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 40px;
+      animation: float 10s infinite linear;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100vh); }
+    }
+
+    .step { display: none; }
+    .active { display: block; }
+    input, button, textarea {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e91e63;
+    }
+    #noBtn, #noBtn2 {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Emojis -->
+  <div class="emoji" style="top:90%; left:10%;">💖</div>
+  <div class="emoji" style="top:95%; left:30%;">🥰</div>
+  <div class="emoji" style="top:92%; left:50%;">🌸</div>
+  <div class="emoji" style="top:94%; left:70%;">😘</div>
+  <div class="emoji" style="top:96%; left:85%;">💘</div>
+
+  <div id="step1" class="step active">
+    <h2>💬 What's your name?</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <br>
+    <button onclick="goToStep2()">Next</button>
+  </div>
+
+  <div id="step2" class="step">
+    <h2>💞 Relationship Questions</h2>
+    <p>What’s something you love about us?</p>
+    <textarea id="q1" rows="3" cols="40"></textarea><br>
+    <p>What’s one thing you wish I did more often?</p>
+    <textarea id="q2" rows="3" cols="40"></textarea><br>
+    <button onclick="goToStep3()">Next</button>
+  </div>
+
+  <div id="step3" class="step">
+    <h2>💘 Do You Love Me?</h2>
+    <p>Be honest now...</p>
+    <button onclick="goToStep4()">Yes ❤️</button>
+    <button id="noBtn" onmouseover="moveNoBtn()">No 😒</button>
+  </div>
+
+  <div id="step4" class="step">
+    <h2>💖 Just Making Sure...</h2>
+    <p>So you really love me?</p>
+    <button onclick="goToStep5()">Of course I do 💕</button>
+    <button id="noBtn2" onmouseover="moveNoBtn()">Still no 😶</button>
+  </div>
+
+  <div id="step5" class="step">
+    <h2>💌 Final Message</h2>
+    <p id="finalMessage"></p>
+    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Love gif" width="300">
+    <br><br>
+    <button onclick="location.reload()">Start Over</button>
+  </div>
+
+  <script>
+    function goToStep2() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (name === "") {
+        alert("Please enter your name.");
+        return;
+      }
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
+
+    function goToStep3() {
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step3').classList.add('active');
+    }
+
+    function goToStep4() {
+      document.getElementById('step3').classList.remove('active');
+      document.getElementById('step4').classList.add('active');
+    }
+
+    function goToStep5() {
+      const name = document.getElementById('nameInput').value.trim();
+      document.getElementById('step4').classList.remove('active');
+      document.getElementById('step5').classList.add('active');
+      document.getElementById('finalMessage').innerHTML = `
+        Dear ${name},<br><br>
+        I'm sorry for anything that hurt you.<br>
+        I love you more than words can say. 💖<br>
+        Thank you for being you.
+      `;
+    }
+
+    function moveNoBtn() {
+      const btns = [document.getElementById('noBtn'), document.getElementById('noBtn2')];
+      btns.forEach(btn => {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 100);
+        btn.style.left = `${x}px`;
+        btn.style.top = `${y}px`;
+      });
+    }
+  </script>
+
+</body>
+</html>
